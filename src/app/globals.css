@@ -2,26 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --bg-color: 252 252 253;
+    --border-color: 196 196 196;
+    --border-hover: 160 160 160;
+    --border-focus: 153 153 153;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-color: 29 30 32;
+      --border-color: 97 101 107;
+      --border-hover: 121 127 134;
+      --border-focus: 148 152 158;
+    }
+  }
+}
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  /* --bg-color: #fcfcfd; */
+  --font-color: #1a1d21;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    /* --bg-color: #1d1e20; */
+    --font-color: #e8eaed;
   }
 }
 
+*,
+::before,
+::after {
+  border-color: rgb(var(--border-color));
+}
+
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: rgb(var(--bg-color));
+  color: var(--font-color);
+  border-color: var(--font-color);
+}
+main {
+  max-width: 48rem;
+  margin: auto;
+  padding: 2rem 1rem 3rem;
+}
+h1 {
+  font-weight: 300;
+  font-size: 2rem;
+  margin: 0 0 1rem;
+}
+
+@media (max-width: 48rem) {
+  main {
+    padding: 2rem 1.5rem 3rem;
+  }
+}
+@media (max-width: 40rem) {
+  main {
+    padding: 1rem 1rem 3rem;
+  }
 }
