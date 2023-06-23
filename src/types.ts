@@ -4,19 +4,18 @@ export interface PersonProfileLink {
   tagsStr: string;
 }
 
-export interface PersonProfilePage {
-  id: string;
+export interface PersonProfileInfo {
   name: string;
   tagsArr: string[];
   email: string | null;
   links: string[];
 }
 
-export interface PersonProfileData {
+export interface PersonProfilePage extends PersonProfileInfo {
   id: string;
-  name: string;
+}
+
+export interface PersonProfileData extends PersonProfileInfo {
+  id: string;
   tagsStr: string;
-  tagsArr: string[];
-  email: string | null;
-  links: string[];
 }

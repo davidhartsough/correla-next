@@ -1,6 +1,5 @@
 import { getProfile } from "@/models/profiles";
 import ProfilePageFooter from "@/components/ProfilePageFooter";
-import "./p.css";
 import TagChip from "@/components/chips/TagChip";
 import EmailChip from "@/components/chips/EmailChip";
 import ExtUrlChip from "@/components/chips/ExtUrlChip";

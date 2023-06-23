@@ -31,6 +31,11 @@ export async function getProfile(id: string): Promise<PersonProfilePage> {
   return profile;
 }
 
+export async function updateProfile(p: PersonProfilePage): Promise<boolean> {
+  console.log("updateProfile:", p);
+  return true;
+}
+
 export async function discoverProfiles(
   name: string | undefined,
   tags: string | undefined
