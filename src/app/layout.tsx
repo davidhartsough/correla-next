@@ -1,9 +1,38 @@
+import type { Metadata } from "next";
 import "./globals.css";
 import TopBarNav from "@/components/TopBarNav";
 
-export const metadata = {
-  title: "Correla",
-  description: "Correla v2.0 (next app)",
+const description =
+  "Correla connects people through correlation and conversation. Explore the directory, discover amazing people, and make new connections.";
+export const metadata: Metadata = {
+  title: {
+    template: "%s • Correla",
+    default: "Correla",
+  },
+  description,
+  keywords: [
+    "correla",
+    "correlation",
+    "connection",
+    "conversation",
+    "people",
+    "connect",
+    "discover",
+    "directory",
+    "explore",
+  ],
+  applicationName: "Correla",
+  openGraph: {
+    type: "website",
+    title: {
+      template: "%s • Correla",
+      default: "Correla",
+    },
+    description,
+    url: "https://correla.com/",
+    locale: "en_US",
+    siteName: "Correla",
+  },
 };
 
 export default function RootLayout({

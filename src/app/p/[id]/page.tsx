@@ -1,8 +1,19 @@
+import type { Metadata } from "next";
 import { getProfile } from "@/models/profiles";
 import ProfilePageFooter from "@/components/ProfilePageFooter";
 import TagChip from "@/components/chips/TagChip";
 import EmailChip from "@/components/chips/EmailChip";
 import ExtUrlChip from "@/components/chips/ExtUrlChip";
+import { getBasicMeta } from "@/metadata-utils";
+
+export async function generateMetadata({
+  params: { id },
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const { name, tagsArr } = await getProfile(id);
+  return getBasicMeta(name, `p/${id}`, `${name}: ${tagsArr.join(", ")}`);
+}
 
 export default async function PersonProfile({
   params: { id },

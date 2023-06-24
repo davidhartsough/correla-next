@@ -35,9 +35,8 @@ export default function ProfileForm({ p }: { p: PersonProfilePage }) {
         links.push(url);
       }
     });
-    const id = "todo";
     const profile = {
-      id,
+      id: p.id,
       name: name.trim(),
       tagsArr,
       email: email.trim() || null,
@@ -45,7 +44,7 @@ export default function ProfileForm({ p }: { p: PersonProfilePage }) {
     };
     setLoading(true);
     await updateProfile(profile);
-    router.push(`/p/${id}`);
+    router.push(`/p/${p.id}`);
   };
 
   return (

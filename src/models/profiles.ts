@@ -36,6 +36,24 @@ export async function updateProfile(p: PersonProfilePage): Promise<boolean> {
   return true;
 }
 
+export async function createNewProfile(
+  username: string,
+  name: string,
+  email: string
+): Promise<boolean> {
+  console.log("new p:", {
+    username,
+    name,
+    email,
+  });
+  return true;
+}
+
+export async function checkIfUsernameTaken(username: string): Promise<boolean> {
+  console.log("username:", username);
+  return false;
+}
+
 export async function discoverProfiles(
   name: string | undefined,
   tags: string | undefined

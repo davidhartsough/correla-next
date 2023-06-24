@@ -1,7 +1,6 @@
 // import { redirect } from "next/navigation";
 // import { isSignedIn } from "@/session";
 import { getMockProfile } from "@/models/mocks";
-import BasePageLayout from "@/components/BasePageLayout";
 import ProfileForm from "@/components/form/ProfileForm";
 
 export default async function Edit() {
@@ -9,9 +8,5 @@ export default async function Edit() {
   // const isLoggedIn = await isSignedIn();
   // if (!isLoggedIn) return redirect("/a/login");
   const p = getMockProfile("todo");
-  return (
-    <BasePageLayout title="Edit Profile">
-      <ProfileForm p={p} />
-    </BasePageLayout>
-  );
+  return <ProfileForm p={p} />;
 }
