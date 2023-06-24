@@ -1,22 +1,19 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getUserId } from "@/session";
 import { getSavedProfiles } from "@/models/profiles";
+import PLink from "@/components/PLink";
 
 export default async function Saved() {
   const userId = await getUserId();
   if (!userId) return redirect("/a/login");
   const saved = await getSavedProfiles(userId);
-  // TODO: what if empty
+  if (saved.length === 0) {
+    return <p>Any profiles you save will be listed here.</p>;
+  }
   return (
     <div>
       {saved.map((p) => (
-        <div key={p.id}>
-          <Link href={`/p/${p.id}`}>
-            <p>{p.name}</p>
-            <p>{p.tagsStr}</p>
-          </Link>
-        </div>
+        <PLink key={p.id} id={p.id} name={p.name} tagsStr={p.tagsStr} />
       ))}
     </div>
   );
