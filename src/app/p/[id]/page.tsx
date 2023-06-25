@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { getProfile } from "@/models/profiles";
-import ProfilePageFooter from "@/components/ProfilePageFooter";
 import TagChip from "@/components/chips/TagChip";
 import EmailChip from "@/components/chips/EmailChip";
 import ExtUrlChip from "@/components/chips/ExtUrlChip";
+import EditLink from "@/components/EditLink";
 import { getBasicMeta } from "@/metadata-utils";
 
 export async function generateMetadata({
@@ -11,8 +12,9 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const { name, tagsArr } = await getProfile(id);
-  return getBasicMeta(name, `p/${id}`, `${name}: ${tagsArr.join(", ")}`);
+  const p = await getProfile(id);
+  if (!p) return {};
+  return getBasicMeta(p.name, `p/${id}`, `${p.name}: ${p.tagsArr.join(", ")}`);
 }
 
 export default async function PersonProfile({
@@ -20,11 +22,16 @@ export default async function PersonProfile({
 }: {
   params: { id: string };
 }) {
-  const { name, tagsArr, email, links } = await getProfile(id);
+  const p = await getProfile(id);
+  if (!p) return redirect("/");
+  const { name, tagsArr, email, links } = p;
   return (
     <main id="person">
-      <header>
-        <h1 id="name">{name}</h1>
+      <header className="mb-6 flex items-center">
+        <h1 id="name" className="m-0 flex-auto leading-10">
+          {name}
+        </h1>
+        <EditLink profileId={id} />
       </header>
       <section id="profile">
         <div id="tags" className="chips flex flex-wrap pb-4">
@@ -39,7 +46,6 @@ export default async function PersonProfile({
             <ExtUrlChip key={url} url={url} />
           ))}
         </div>
-        <ProfilePageFooter profileId={id} />
       </section>
     </main>
   );

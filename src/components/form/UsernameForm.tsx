@@ -3,26 +3,18 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { ArrowBigRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { checkIfUsernameTaken, createNewProfile } from "@/models/profiles";
+import { checkUsername, createP } from "@/api-utils";
+import LilLoader from "../loader/LilLoader";
 
-const usernamePattern = /^[a-z\-0-9]{3,36}$/;
+const usernamePattern = /^[a-z0-9]{3,36}$/;
 
-export default function UsernameForm({
-  suggestion,
-  name,
-  email,
-}: {
-  suggestion: string;
-  name: string;
-  email: string;
-}) {
+export default function UsernameForm({ suggestion }: { suggestion: string }) {
   const [username, setUsername] = useState(suggestion);
   const [loading, setLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [lastInput, setLastInput] = useState("");
   const [isTaken, setIsTaken] = useState(false);
   const [finishing, setFinishing] = useState(false);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -37,15 +29,35 @@ export default function UsernameForm({
     if (isValid) {
       setLoading(true);
       setLastInput(username);
-      const usernameIsTaken = await checkIfUsernameTaken(username);
-      if (usernameIsTaken) {
+      try {
+        const usernameIsTaken = await checkUsername(username);
+        if (usernameIsTaken) {
+          setIsTaken(true);
+          setLoading(false);
+        } else {
+          setIsTaken(false);
+          try {
+            setFinishing(true);
+            const ok = await createP(username);
+            if (ok) {
+              router.push("/a/edit");
+            } else {
+              setIsTaken(true);
+              setLoading(false);
+              setFinishing(false);
+            }
+          } catch {
+            // TODO: show error
+            setIsTaken(true);
+            setLoading(false);
+            setFinishing(false);
+          }
+        }
+      } catch {
+        // TODO: show error
         setIsTaken(true);
         setLoading(false);
-      } else {
-        setIsTaken(false);
-        setFinishing(true);
-        await createNewProfile(username, name, email);
-        router.push("/a/edit");
+        setFinishing(false);
       }
     }
   };
@@ -80,13 +92,15 @@ export default function UsernameForm({
               autoCorrect="off"
               autoCapitalize="off"
               spellCheck="false"
-              pattern="[a-z\-0-9]{3,36}"
-              title="Usernames can only contain lowercase alphanumeric characters and hyphens and must be at least 3 characters long."
+              pattern="[a-z0-9]{3,36}"
+              title="Usernames can only contain lowercase alphanumeric characters and must be at least 3 characters long."
               readOnly={loading}
               onChange={handleInputChange}
             />
             {loading ? (
-              <p>loading</p>
+              <div className="ml-1 flex items-center justify-center">
+                <LilLoader />
+              </div>
             ) : (
               <button
                 type="submit"

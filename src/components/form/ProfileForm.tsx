@@ -3,9 +3,10 @@
 import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { PersonProfilePage } from "@/types";
-import { updateProfile } from "@/models/profiles";
+import { updateP } from "@/api-utils";
 import LinksForm, { urlPattern } from "./LinksForm";
 import TagInput from "./TagInput";
+import LilLoader from "../loader/LilLoader";
 
 export default function ProfileForm({ p }: { p: PersonProfilePage }) {
   const router = useRouter();
@@ -43,7 +44,8 @@ export default function ProfileForm({ p }: { p: PersonProfilePage }) {
       links,
     };
     setLoading(true);
-    await updateProfile(profile);
+    const ok = await updateP(profile);
+    // TODO: handle error if not ok
     router.push(`/p/${p.id}`);
   };
 
@@ -90,7 +92,7 @@ export default function ProfileForm({ p }: { p: PersonProfilePage }) {
       </div>
       <footer className="m-2 flex items-center justify-center">
         {loading ? (
-          <p>Loading</p>
+          <LilLoader size={40} />
         ) : (
           <button
             type="button"

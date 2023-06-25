@@ -5,6 +5,7 @@ import TopBarNav from "@/components/TopBarNav";
 const description =
   "Correla connects people through correlation and conversation. Explore the directory, discover amazing people, and make new connections.";
 export const metadata: Metadata = {
+  metadataBase: new URL("https://correla.vercel.app"),
   title: {
     template: "%s • Correla",
     default: "Correla",

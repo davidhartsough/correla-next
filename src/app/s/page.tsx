@@ -1,12 +1,12 @@
 import { redirect } from "next/navigation";
-import { getUserId } from "@/session";
+import { getUser } from "@/session";
 import { getSavedProfiles } from "@/models/profiles";
 import PLink from "@/components/PLink";
 
 export default async function Saved() {
-  const userId = await getUserId();
-  if (!userId) return redirect("/a/login");
-  const saved = await getSavedProfiles(userId);
+  const user = await getUser();
+  if (!user) return redirect("/a/login");
+  const saved = await getSavedProfiles(user.id);
   if (saved.length === 0) {
     return <p>Any profiles you save will be listed here.</p>;
   }

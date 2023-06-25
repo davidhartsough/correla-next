@@ -1,22 +1,10 @@
-// import prisma from "@/db";
+import prisma from "@/db";
+import { getUser } from "@/session";
 import type { PersonProfileLink, PersonProfilePage } from "@/types";
-import { getMockProfile, mockProfiles } from "./mocks";
 
-/*
-export async function getUser(id: string) {
-  return prisma.user.findUnique({
-    where: { id },
-    select: {
-      id: true,
-      profileId: true,
-    },
-  });
-}
-*/
-
-export async function getProfile(id: string): Promise<PersonProfilePage> {
-  const profile = getMockProfile(id);
-  /*
+export async function getProfile(
+  id: string
+): Promise<PersonProfilePage | null> {
   const profile = await prisma.profile.findUnique({
     where: { id },
     select: {
@@ -27,31 +15,56 @@ export async function getProfile(id: string): Promise<PersonProfilePage> {
       links: true,
     },
   });
-  */
   return profile;
 }
 
 export async function updateProfile(p: PersonProfilePage): Promise<boolean> {
-  console.log("updateProfile:", p);
-  return true;
+  const user = await getUser();
+  if (!user || user.profileId !== p.id) return false;
+  try {
+    await prisma.profile.update({
+      where: { id: p.id },
+      data: {
+        name: p.name,
+        email: p.email,
+        links: p.links,
+        tagsArr: p.tagsArr,
+        tagsStr: p.tagsArr.join(", "),
+      },
+    });
+    return true;
+  } catch {
+    return false;
+  }
 }
 
-export async function createNewProfile(
-  username: string,
-  name: string,
-  email: string
-): Promise<boolean> {
-  console.log("new p:", {
-    username,
-    name,
-    email,
+export async function createNewProfile(username: string): Promise<boolean> {
+  const user = await getUser();
+  if (!user || !user.id) return false;
+  await prisma.profile.create({
+    data: {
+      id: username,
+      name: user.name || user.email.split("@")[0],
+      email: user.email,
+      tagsStr: "human, person",
+      tagsArr: ["human", "person"],
+      links: [],
+      user: { connect: { id: user.id } },
+    },
+  });
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { profileId: username },
   });
   return true;
 }
 
 export async function checkIfUsernameTaken(username: string): Promise<boolean> {
-  console.log("username:", username);
-  return false;
+  const profile = await prisma.profile.findUnique({
+    where: { id: username },
+    select: { id: true },
+  });
+  return !!profile;
 }
 
 export async function discoverProfiles(
@@ -69,14 +82,13 @@ export async function discoverProfiles(
           .map((i) => i.trim().toLowerCase())
           .join(" & ")
       : tags.trim().toLowerCase();
-    where.identity = {
+    where.tagsStr = {
       search: tagsStr,
       mode: "insensitive",
     };
   }
-  const profiles = mockProfiles;
-  /*
-  const profiles = await prisma.profiles.findMany({
+
+  const profiles = await prisma.profile.findMany({
     take: 25,
     where,
     select: {
@@ -86,9 +98,10 @@ export async function discoverProfiles(
     },
     orderBy: { id: "asc" },
   });
-  */
   return profiles;
 }
+
+// TODO: saving other people's profiles
 
 export async function isProfileSaved(
   userId: string,

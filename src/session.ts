@@ -1,13 +1,9 @@
-// import { getServerSession } from "next-auth";
-// import { authOptions } from "./app/api/auth/[...nextauth]";
+import { getServerSession, Session } from "next-auth";
+import { authOptions } from "./app/api/auth/[...nextauth]/route";
 
-export async function getSession() {
-  return null;
-  /*
+async function getSession() {
   const session = await getServerSession(authOptions);
-  console.log("session:", session);
   return session;
-  */
 }
 
 export async function isSignedIn(): Promise<boolean> {
@@ -15,23 +11,28 @@ export async function isSignedIn(): Promise<boolean> {
   return !!session;
 }
 
+interface SessionDatabaseUser {
+  id: string;
+  name: string;
+  email: string;
+  emailVerified: boolean | null;
+  image: string | null;
+  profileId: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface CustomSession extends Session {
+  dbuser: SessionDatabaseUser;
+}
+
 export async function getUser() {
-  const session = await getSession();
-  if (!session) return null;
-  // TODO: get user from session
-  return session;
-}
-
-export async function getUserId(): Promise<string | null> {
-  const session = await getSession();
-  if (!session) return null;
-  // TODO: get user id from session
-  return "session.user.id"; // FIXME
-}
-
-export async function getUserProfileId(): Promise<string | null> {
-  const session = await getSession();
-  if (!session) return null;
-  // TODO: get profile id from user session
-  return "session.user.profileId"; // FIXME
+  const session = (await getSession()) as CustomSession;
+  if (!session || !session.dbuser) return null;
+  return {
+    id: session.dbuser.id,
+    name: session.dbuser.name,
+    email: session.dbuser.email,
+    profileId: session.dbuser.profileId,
+  };
 }

@@ -1,14 +1,14 @@
 import { redirect } from "next/navigation";
-import { isSignedIn } from "@/session";
+import { getUser } from "@/session";
 import UsernameForm from "@/components/form/UsernameForm";
 
 export default async function Create() {
-  // const isLoggedIn = await isSignedIn();
-  // if (!isLoggedIn) return redirect("/a/login");
-  // TODO: everything
-  // if (hasProfile) return redirect("/a/edit");
-  const name = "Steve Stevenson";
-  const email = "steve@gmail.com";
-  const suggestion = name.toLowerCase().replace(/ /g, "-");
-  return <UsernameForm suggestion={suggestion} name={name} email={email} />;
+  const user = await getUser();
+  if (!user) return redirect("/a/login");
+  if (user.profileId) return redirect("/a/edit");
+  const { name, email } = user;
+  const suggestion = name
+    ? name.toLowerCase().replace(/ /g, "")
+    : email.split("@")[0];
+  return <UsernameForm suggestion={suggestion} />;
 }

@@ -1,12 +1,13 @@
-// import { redirect } from "next/navigation";
-// import { isSignedIn } from "@/session";
-import { getMockProfile } from "@/models/mocks";
+import { redirect } from "next/navigation";
+import { getUser } from "@/session";
 import ProfileForm from "@/components/form/ProfileForm";
+import { getProfile } from "@/models/profiles";
 
 export default async function Edit() {
-  // TODO: auth & get profile
-  // const isLoggedIn = await isSignedIn();
-  // if (!isLoggedIn) return redirect("/a/login");
-  const p = getMockProfile("todo");
+  const user = await getUser();
+  if (!user) return redirect("/a/login");
+  if (!user.profileId) return redirect("/a/create");
+  const p = await getProfile(user.profileId);
+  if (!p) return redirect("/a/create");
   return <ProfileForm p={p} />;
 }
