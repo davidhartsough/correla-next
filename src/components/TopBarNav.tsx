@@ -4,7 +4,6 @@ import { isSignedIn } from "@/session";
 import CorrelaLogoIcon from "./icons/CorrelaLogoIcon";
 
 export default async function TopBarNav() {
-  // TODO: use img logo instead?
   const isLoggedIn = await isSignedIn();
   return (
     <div className="border-b border-opacity-50 px-2 py-1">

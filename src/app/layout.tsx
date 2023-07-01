@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     "directory",
     "explore",
   ],
+  alternates: {
+    canonical: "/",
+  },
   applicationName: "Correla",
   openGraph: {
     type: "website",
@@ -34,6 +37,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     siteName: "Correla",
   },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
