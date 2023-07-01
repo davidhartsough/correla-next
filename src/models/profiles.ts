@@ -76,16 +76,20 @@ export async function discoverProfiles(
     where.name = { contains: name, mode: "insensitive" };
   }
   if (tags) {
-    const tagsStr = tags.includes(",")
-      ? tags
-          .split(",")
-          .map((i) => i.trim().toLowerCase())
-          .join(" & ")
-      : tags.trim().toLowerCase();
-    where.tagsStr = {
-      search: tagsStr,
-      mode: "insensitive",
-    };
+    if (tags.includes(",")) {
+      where.AND = tags.split(",").map((t) => ({
+        tagsStr: {
+          contains: t.trim().toLowerCase(),
+          mode: "insensitive",
+        },
+      }));
+    } else {
+      const tag = tags.trim().toLowerCase();
+      where.tagsStr = {
+        contains: tag,
+        mode: "insensitive",
+      };
+    }
   }
 
   const profiles = await prisma.profile.findMany({
