@@ -24,6 +24,7 @@ export default function UsernameForm({ suggestion }: { suggestion: string }) {
 
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setUsername(target.value);
+    setHasError(false);
   };
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -120,9 +121,9 @@ export default function UsernameForm({ suggestion }: { suggestion: string }) {
               : "If the username is available, you can keep it!"}
           </p>
           {hasError && (
-            <p className="my-1 text-sm text-red-600 opacity-80">
-              Unfortunately there was an error checking that username. Try a
-              different one.
+            <p className="my-2 text-sm text-red-600">
+              Unfortunately there was an error checking that username. Please
+              try a different one.
             </p>
           )}
         </fieldset>

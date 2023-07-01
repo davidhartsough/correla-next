@@ -14,6 +14,7 @@ export default function ProfileForm({ p }: { p: PersonProfilePage }) {
   const [name, setName] = useState(p.name);
   const [tagsStr, setTagsStr] = useState(p.tagsArr.join(", "));
   const [email, setEmail] = useState(p.email || "");
+  const [hasError, setHasError] = useState(false);
 
   const handleNameChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setName(target.value);
@@ -43,10 +44,18 @@ export default function ProfileForm({ p }: { p: PersonProfilePage }) {
       email: email.trim() || null,
       links,
     };
+    setHasError(false);
     setLoading(true);
-    const ok = await updateP(profile);
-    // TODO: handle error if not ok
-    router.push(`/p/${p.id}`);
+    try {
+      const ok = await updateP(profile);
+      if (ok) {
+        router.push(`/p/${p.id}`);
+      } else {
+        setHasError(true);
+      }
+    } catch {
+      setHasError(true);
+    }
   };
 
   return (
@@ -87,10 +96,16 @@ export default function ProfileForm({ p }: { p: PersonProfilePage }) {
           onChange={handleEmailChange}
         />
       </fieldset>
-      <div className="mb-8">
+      <div className="mb-4">
         <LinksForm urls={p.links} />
       </div>
-      <footer className="m-2 flex items-center justify-center">
+      {hasError && (
+        <p className="text-sm text-red-600">
+          Unfortunately there was an error saving your profile. Please try again
+          or refresh the page.
+        </p>
+      )}
+      <footer className="m-2 mt-8 flex items-center justify-center">
         {loading ? (
           <LilLoader size={40} />
         ) : (
