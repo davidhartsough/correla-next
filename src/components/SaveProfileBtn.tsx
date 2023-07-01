@@ -19,7 +19,7 @@ export default async function SaveProfileBtn({
     await action(profileId);
     setLoading(false);
   };
-  if (loading) return <LilLoader />;
+  if (loading) return <LilLoader size={40} />;
   return (
     <button
       onClick={handleClick}
