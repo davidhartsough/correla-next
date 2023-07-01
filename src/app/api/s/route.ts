@@ -1,22 +1,6 @@
 import { NextResponse } from "next/server";
 import { getUser } from "@/session";
-import {
-  getSavedProfiles,
-  saveProfile,
-  unsaveProfile,
-} from "@/models/profiles";
-
-export async function GET() {
-  const user = await getUser();
-  if (!user || !user.id) {
-    return NextResponse.json(
-      { message: "unauthenticated/unauthorized" },
-      { status: 401 }
-    );
-  }
-  const profiles = await getSavedProfiles(user.id);
-  return NextResponse.json({ profiles });
-}
+import { saveProfile, unsaveProfile } from "@/models/profiles";
 
 export async function POST(request: Request) {
   const user = await getUser();

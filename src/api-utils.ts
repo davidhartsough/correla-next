@@ -29,12 +29,6 @@ export async function updateP(p: PersonProfilePage) {
   return ok;
 }
 
-export async function getSavedP() {
-  const res = await fetch(`${apiUrl}s/}`);
-  const { profiles } = await res.json();
-  return profiles;
-}
-
 export async function saveP(profileId: string) {
   const res = await fetch(`${apiUrl}s/`, {
     method: "POST",
