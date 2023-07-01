@@ -5,3 +5,7 @@
 - Tags
 - Links
 - Email
+
+## TODO
+
+- suggestions for tags built into profile editor
