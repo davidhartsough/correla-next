@@ -3,7 +3,7 @@
 import { Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const baseURL = "https://correla.vercel.app/";
+const baseURL = `${process.env.BASE_URL}/`;
 
 export default function ShareProfileBtn({ profileId }: { profileId: string }) {
   const [canShare, setCanShare] = useState(false);

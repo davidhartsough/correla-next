@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 import TopBarNav from "@/components/TopBarNav";
 
+const baseURL = process.env.BASE_URL!;
 const description =
   "Correla connects people through correlation and conversation. Explore the directory, discover amazing people, and make new connections.";
 export const metadata: Metadata = {
-  metadataBase: new URL("https://correla.vercel.app"),
+  metadataBase: new URL(baseURL),
   title: {
     template: "%s • Correla",
     default: "Correla",
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
       default: "Correla",
     },
     description,
-    url: "https://correla.vercel.app/",
+    url: `${baseURL}/`,
     locale: "en_US",
     siteName: "Correla",
   },

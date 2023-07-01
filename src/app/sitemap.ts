@@ -1,8 +1,8 @@
 import { MetadataRoute } from "next";
 import prisma from "@/db";
 
+const baseUrl = process.env.BASE_URL;
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://correla.vercel.app";
   const mainPaths = [
     "",
     "/explore",
