@@ -11,7 +11,7 @@ export function getBasicMeta(
     openGraph: {
       title,
       description,
-      url: `https://correla.com/${path}/`,
+      url: `https://correla.vercel.app/${path}/`,
     },
   };
 }

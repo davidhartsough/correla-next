@@ -30,7 +30,7 @@ export const metadata: Metadata = {
       default: "Correla",
     },
     description,
-    url: "https://correla.com/",
+    url: "https://correla.vercel.app/",
     locale: "en_US",
     siteName: "Correla",
   },
