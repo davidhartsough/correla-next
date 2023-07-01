@@ -15,6 +15,7 @@ export default function UsernameForm({ suggestion }: { suggestion: string }) {
   const [lastInput, setLastInput] = useState("");
   const [isTaken, setIsTaken] = useState(false);
   const [finishing, setFinishing] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export default function UsernameForm({ suggestion }: { suggestion: string }) {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (isValid) {
+      setHasError(false);
       setLoading(true);
       setLastInput(username);
       try {
@@ -47,14 +49,15 @@ export default function UsernameForm({ suggestion }: { suggestion: string }) {
               setFinishing(false);
             }
           } catch {
-            // TODO: show error
-            setIsTaken(true);
+            setHasError(true);
+            setIsTaken(false);
             setLoading(false);
             setFinishing(false);
           }
         }
       } catch {
-        // TODO: show error
+        setHasError(true);
+        setIsTaken(false);
         setIsTaken(true);
         setLoading(false);
         setFinishing(false);
@@ -116,6 +119,12 @@ export default function UsernameForm({ suggestion }: { suggestion: string }) {
               ? `Sorry, "${lastInput}" is already taken.`
               : "If the username is available, you can keep it!"}
           </p>
+          {hasError && (
+            <p className="my-1 text-sm text-red-600 opacity-80">
+              Unfortunately there was an error checking that username. Try a
+              different one.
+            </p>
+          )}
         </fieldset>
       </form>
     </div>
