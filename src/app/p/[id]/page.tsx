@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getProfile } from "@/models/profiles";
+import { getBasicMeta } from "@/metadata-utils";
 import TagChip from "@/components/chips/TagChip";
 import EmailChip from "@/components/chips/EmailChip";
 import ExtUrlChip from "@/components/chips/ExtUrlChip";
-import { getBasicMeta } from "@/metadata-utils";
 import PActionBtn from "@/components/PActionBtn";
 
 type PageProps = {
