@@ -4,24 +4,22 @@ import { getProfile } from "@/models/profiles";
 import TagChip from "@/components/chips/TagChip";
 import EmailChip from "@/components/chips/EmailChip";
 import ExtUrlChip from "@/components/chips/ExtUrlChip";
-import EditLink from "@/components/EditLink";
 import { getBasicMeta } from "@/metadata-utils";
+import PActionBtn from "@/components/PActionBtn";
+
+type PageProps = {
+  params: { id: string };
+};
 
 export async function generateMetadata({
   params: { id },
-}: {
-  params: { id: string };
-}): Promise<Metadata> {
+}: PageProps): Promise<Metadata> {
   const p = await getProfile(id);
   if (!p) return {};
   return getBasicMeta(p.name, `p/${id}`, `${p.name}: ${p.tagsArr.join(", ")}`);
 }
 
-export default async function PersonProfile({
-  params: { id },
-}: {
-  params: { id: string };
-}) {
+export default async function PersonProfile({ params: { id } }: PageProps) {
   const p = await getProfile(id);
   if (!p) return redirect("/");
   const { name, tagsArr, email, links } = p;
@@ -31,7 +29,7 @@ export default async function PersonProfile({
         <h1 id="name" className="m-0 flex-auto leading-10">
           {name}
         </h1>
-        <EditLink profileId={id} />
+        <PActionBtn profileId={id} />
       </header>
       <section id="profile">
         <div id="tags" className="chips flex flex-wrap pb-4">

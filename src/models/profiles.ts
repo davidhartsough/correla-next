@@ -105,23 +105,64 @@ export async function discoverProfiles(
   return profiles;
 }
 
-// TODO: saving other people's profiles
-
 export async function isProfileSaved(
   userId: string,
   profileId: string
 ): Promise<boolean> {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      savedProfiles: {
+        where: { id: profileId },
+        select: { id: true },
+      },
+    },
+  });
+  if (user && user.savedProfiles[0] && user.savedProfiles[0].id === profileId) {
+    return true;
+  }
   return false;
 }
 
-export async function saveProfile(userId: string, profileId: string) {}
+export async function saveProfile(userId: string, profileId: string) {
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      savedProfiles: {
+        connect: { id: profileId },
+      },
+    },
+  });
+  return true;
+}
 
-export async function unsaveProfile(userId: string, profileId: string) {}
+export async function unsaveProfile(userId: string, profileId: string) {
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      savedProfiles: {
+        disconnect: { id: profileId },
+      },
+    },
+  });
+  return true;
+}
 
 export async function getSavedProfiles(
   userId: string
 ): Promise<PersonProfileLink[]> {
-  // const profiles = await prisma.profiles.findMany({});
-  // return profiles;
-  return [];
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      savedProfiles: {
+        select: {
+          id: true,
+          name: true,
+          tagsStr: true,
+        },
+      },
+    },
+  });
+  if (!user) return [];
+  return user.savedProfiles;
 }
