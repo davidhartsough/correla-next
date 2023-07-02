@@ -108,7 +108,7 @@ export default function UsernameForm({ suggestion }: { suggestion: string }) {
             ) : (
               <button
                 type="submit"
-                className="ml-1 flex items-center justify-center rounded-full bg-bluebase p-1 transition-colors hover:bg-bluehover focus:bg-bluehover"
+                className="ml-1 flex items-center justify-center rounded-full bg-bluebase p-1 text-white transition-colors hover:bg-bluehover focus:bg-bluehover"
                 disabled={!isValid}
               >
                 <ArrowBigRight />
