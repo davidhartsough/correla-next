@@ -1,6 +1,10 @@
 import type { PersonProfilePage } from "./types";
 
-const apiUrl = `${process.env.BASE_URL}/api/`;
+const baseUrl =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://correla.vercel.app";
+const apiUrl = `${baseUrl}/api/`;
 
 export async function checkUsername(username: string) {
   const res = await fetch(`${apiUrl}p/?id=${username}`);
