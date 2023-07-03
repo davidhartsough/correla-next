@@ -6,16 +6,18 @@ import { saveP, unsaveP } from "@/api-utils";
 import LilLoader from "./loader/LilLoader";
 
 export default async function SaveProfileBtn({
-  isSaved,
+  isSavedDefault,
   profileId,
 }: {
-  isSaved: boolean;
+  isSavedDefault: boolean;
   profileId: string;
 }) {
   const [loading, setLoading] = useState(false);
-  const action = isSaved ? unsaveP : saveP;
+  const [isSaved, setIsSaved] = useState(isSavedDefault);
   const handleClick = async () => {
     setLoading(true);
+    const action = isSaved ? unsaveP : saveP;
+    setIsSaved(!isSaved);
     await action(profileId);
     setLoading(false);
   };

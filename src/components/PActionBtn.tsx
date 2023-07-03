@@ -18,5 +18,5 @@ export default async function PActionBtn({ profileId }: { profileId: string }) {
     );
   }
   const isSaved = await isProfileSaved(user.id, profileId);
-  return <SaveProfileBtn isSaved={isSaved} profileId={profileId} />;
+  return <SaveProfileBtn isSavedDefault={isSaved} profileId={profileId} />;
 }

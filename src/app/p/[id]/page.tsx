@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { getProfile } from "@/models/profiles";
 import { getBasicMeta } from "@/metadata-utils";
 import TagChip from "@/components/chips/TagChip";
 import EmailChip from "@/components/chips/EmailChip";
 import ExtUrlChip from "@/components/chips/ExtUrlChip";
 import PActionBtn from "@/components/PActionBtn";
+import LilLoader from "@/components/loader/LilLoader";
 
 type PageProps = {
   params: { id: string };
@@ -29,7 +31,9 @@ export default async function PersonProfile({ params: { id } }: PageProps) {
         <h1 id="name" className="m-0 flex-auto leading-10">
           {name}
         </h1>
-        <PActionBtn profileId={id} />
+        <Suspense fallback={<LilLoader size={40} />}>
+          <PActionBtn profileId={id} />
+        </Suspense>
       </header>
       <section id="profile">
         <div id="tags" className="chips flex flex-wrap pb-4">
