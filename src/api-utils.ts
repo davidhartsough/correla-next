@@ -30,6 +30,12 @@ export async function updateP(p: PersonProfilePage) {
   return ok;
 }
 
+export async function isSavedP(profileId: string) {
+  const res = await fetch(`${apiUrl}s/?id=${profileId}`);
+  const { isSaved } = await res.json();
+  return isSaved;
+}
+
 export async function saveP(profileId: string) {
   const res = await fetch(`${apiUrl}s/`, {
     method: "POST",

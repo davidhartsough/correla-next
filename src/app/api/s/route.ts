@@ -1,6 +1,23 @@
 import { NextResponse } from "next/server";
 import { getUser } from "@/session";
-import { saveProfile, unsaveProfile } from "@/models/profiles";
+import { isProfileSaved, saveProfile, unsaveProfile } from "@/models/profiles";
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+  if (!id) {
+    return NextResponse.json({ message: "invalid request" }, { status: 400 });
+  }
+  const user = await getUser();
+  if (!user || !user.id) {
+    return NextResponse.json(
+      { message: "unauthenticated/unauthorized" },
+      { status: 401 }
+    );
+  }
+  const isSaved = await isProfileSaved(user.id, id);
+  return NextResponse.json({ isSaved });
+}
 
 export async function POST(request: Request) {
   const user = await getUser();
