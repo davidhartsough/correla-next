@@ -5,7 +5,7 @@ import { Bookmark, BookmarkMinus, BookmarkPlus } from "lucide-react";
 import { saveP, unsaveP } from "@/api-utils";
 import LilLoader from "../loader/LilLoader";
 
-export default async function SaveProfileBtn({
+export default function SaveProfileBtn({
   isSavedDefault,
   profileId,
 }: {
