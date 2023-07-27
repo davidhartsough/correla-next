@@ -30,7 +30,7 @@ export default async function Home() {
                   Explore the directory <br /> and find your people.
                 </p>
                 <Link
-                  href="/explore"
+                  href="/d"
                   className="m-auto flex w-44 rounded-3xl border border-white/40 bg-[rgba(38,144,237,.9)] px-8 py-2 font-medium tracking-wide text-white shadow shadow-white/50 transition-all hover:scale-105 hover:shadow-white/60 focus:shadow-white/80"
                 >
                   <Compass />

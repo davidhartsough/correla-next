@@ -18,7 +18,7 @@ export default async function TopBarNav() {
         </div>
         <div className="flex basis-1/2 items-center justify-end">
           <Link
-            href="/explore"
+            href="/d"
             className="flex h-12 w-12 items-center justify-center rounded-full opacity-70 transition-all hover:bg-black/5 hover:opacity-100 focus:bg-black/5 focus:opacity-100 dark:hover:bg-white/5 dark:focus:bg-white/5"
           >
             <div className="flex h-7 w-7 items-center justify-center">

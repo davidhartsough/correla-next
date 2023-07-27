@@ -5,8 +5,7 @@ const baseUrl = process.env.BASE_URL;
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const mainPaths = [
     "",
-    "/explore",
-    "/discover",
+    "/d",
     "/a",
     "/a/login",
     "/a/edit",
