@@ -1,11 +1,10 @@
-export default function CorrelaLogoIcon({ big = false }: { big?: boolean }) {
+export default function CorrelaLogoIcon() {
   return (
     <svg
-      className={big ? "bg-logo drop-shadow-2xl max-[555px]:w-[110vw]" : ""}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width={big ? "640" : "40"}
-      height={big ? "640" : "40"}
+      width="40"
+      height="40"
       viewBox="0 0 640 640"
     >
       <defs>

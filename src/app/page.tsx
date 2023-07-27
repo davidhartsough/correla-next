@@ -1,22 +1,21 @@
+import { Suspense } from "react";
 import Link from "next/link";
-import { Compass, Users } from "lucide-react";
-import { isSignedIn } from "@/session";
-import CorrelaLogoIcon from "@/components/icons/CorrelaLogoIcon";
+import { Compass } from "lucide-react";
 import HighFiveIcon from "@/components/icons/HighFiveIcon";
 import FindPersonIcon from "@/components/icons/FindPersonIcon";
 import TalkIcon from "@/components/icons/TalkIcon";
+import HomeAccountLoad from "@/components/home/HomeAccountLoad";
+import HomeAccountLink from "@/components/home/HomeAccountLink";
+import BgLogoSpin from "@/components/home/BgLogoSpin";
 import "./home.css";
 
 export default async function Home() {
-  const isLoggedIn = await isSignedIn();
   return (
     <main className="max-w-none p-0">
       <section className="relative">
         <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden bg-bluebase">
           <div className="mx-auto mt-8 flex items-center justify-center rounded-full text-center opacity-70">
-            <div className="animate-spin-slow blur-[1px]">
-              <CorrelaLogoIcon big />
-            </div>
+            <BgLogoSpin />
           </div>
         </div>
         <div className="relative z-10 bg-gradient-to-t from-bgbase via-bgbase/30 to-bluebase/70">
@@ -38,24 +37,9 @@ export default async function Home() {
                   <span className="ml-2">Discover</span>
                 </Link>
               </div>
-              <div className="m-auto mt-4 basis-52 text-center">
-                {isLoggedIn ? (
-                  <p className="text-shadow mb-4 text-lg font-semibold leading-tight text-white">
-                    View, edit, and <br /> share your profile.
-                  </p>
-                ) : (
-                  <p className="text-shadow mb-4 text-lg font-semibold leading-tight text-white">
-                    Join the community <br /> and create your profile.
-                  </p>
-                )}
-                <Link
-                  href={isLoggedIn ? "/a" : "/a/login"}
-                  className="m-auto flex w-44 rounded-3xl border border-white/40 bg-[rgba(38,144,237,.9)] px-8 py-2 font-medium tracking-wide text-white shadow shadow-white/50 transition-all hover:scale-105 hover:shadow-white/60 focus:shadow-white/80"
-                >
-                  <Users />
-                  <span className="ml-2">Connect</span>
-                </Link>
-              </div>
+              <Suspense fallback={<HomeAccountLink isLoggedIn={false} />}>
+                <HomeAccountLoad />
+              </Suspense>
             </div>
           </div>
           <div className="bg-gradient-to-t from-bgbase via-bgbase/80 p-4 pb-0">
