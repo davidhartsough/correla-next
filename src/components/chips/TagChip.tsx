@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 function getTagLink(tag: string): string {
-  return `/discover?tags=${encodeURIComponent(tag)}`;
+  return `/d?tags=${encodeURIComponent(tag)}`;
 }
 
 export default function TagChip({ tag }: { tag: string }) {
