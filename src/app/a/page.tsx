@@ -3,8 +3,8 @@ import { redirect } from "next/navigation";
 import { Edit, Bookmark, Eye } from "lucide-react";
 import { getUser } from "@/session";
 import BasePageLayout from "@/components/BasePageLayout";
-import SignOutBtn from "@/components/SignOutBtn";
-import ShareProfileBtn from "@/components/ShareProfileBtn";
+import SignOutBtn from "@/components/a/SignOutBtn";
+import ShareProfileBtn from "@/components/a/ShareProfileBtn";
 
 export default async function Account() {
   const user = await getUser();

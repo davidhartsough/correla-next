@@ -1,5 +1,5 @@
-import Explore from "@/components/Explore";
-import Discover from "@/components/Discover";
+import Explore from "@/components/d/Explore";
+import Discover from "@/components/d/Discover";
 
 export default function Directory({
   searchParams,

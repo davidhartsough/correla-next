@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import GoogleIcon from "./icons/GoogleIcon";
+import GoogleIcon from "../icons/GoogleIcon";
 
 export default function GoogleLoginBtn() {
   const googleSignIn = () => signIn("google");

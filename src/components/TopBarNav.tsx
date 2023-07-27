@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { Search, UserCircle2 } from "lucide-react";
-import { isSignedIn } from "@/session";
 import CorrelaLogoIcon from "./icons/CorrelaLogoIcon";
 
 export default async function TopBarNav() {
-  const isLoggedIn = await isSignedIn();
   return (
     <div className="border-b border-opacity-50 px-2 py-1">
       <nav className="m-auto flex max-w-3xl">
@@ -26,7 +24,7 @@ export default async function TopBarNav() {
             </div>
           </Link>
           <Link
-            href={isLoggedIn ? "/a" : "/a/login"}
+            href="/a"
             className="flex h-12 w-12 items-center justify-center rounded-full opacity-70 transition-all hover:bg-black/5 hover:opacity-100 focus:bg-black/5 focus:opacity-100 dark:hover:bg-white/5 dark:focus:bg-white/5"
           >
             <div className="flex h-7 w-7 items-center justify-center">

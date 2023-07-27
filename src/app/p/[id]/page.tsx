@@ -6,7 +6,7 @@ import { getBasicMeta } from "@/metadata-utils";
 import TagChip from "@/components/chips/TagChip";
 import EmailChip from "@/components/chips/EmailChip";
 import ExtUrlChip from "@/components/chips/ExtUrlChip";
-import PActionBtn from "@/components/PActionBtn";
+import PActionBtn from "@/components/p/PActionBtn";
 import LilLoader from "@/components/loader/LilLoader";
 
 type PageProps = {
