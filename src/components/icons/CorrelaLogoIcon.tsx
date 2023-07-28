@@ -1,11 +1,12 @@
-export default function CorrelaLogoIcon() {
+export default function CorrelaLogoIcon({ big = false }: { big?: boolean }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="40"
-      height="40"
+      width={big ? "640" : "40"}
+      height={big ? "640" : "40"}
       viewBox="0 0 640 640"
+      id={big ? "bg-logo" : undefined}
     >
       <defs>
         <path

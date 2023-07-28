@@ -1,8 +1,10 @@
 #bg-logo {
+  height: auto;
   filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
 }
 @media (max-width: 555px) {
   #bg-logo {
+    max-width: none;
     width: 110vw;
   }
 }

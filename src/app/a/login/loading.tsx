@@ -1,5 +1,9 @@
 import PageLoader from "@/components/loader/PageLoader";
 
 export default function Loading() {
-  return <PageLoader />;
+  return (
+    <div className="text-white">
+      <PageLoader />
+    </div>
+  );
 }
